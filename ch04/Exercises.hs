@@ -33,6 +33,6 @@ splitWith p xs =
 	let (as, bs) = break (not . p) xs
 	in as : case bs of
 		[] -> []
-		_ -> splitWith p (tail bs)
+		_ -> splitWith p (snd $ span (not . p) bs)
 
 -- **********************************************************************
