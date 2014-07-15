@@ -32,8 +32,6 @@ splitWith :: (a -> Bool) -> [a] -> [[a]]
 splitWith _ [] = []
 splitWith p xs =
 	let (as, bs) = break (not . p) xs
-	in as : case bs of
-		[] -> []
-		_ -> splitWith p (snd $ span (not . p) bs)
+	in as : splitWith p (snd $ span (not . p) bs)
 
 -- **********************************************************************
