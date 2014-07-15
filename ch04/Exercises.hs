@@ -29,6 +29,7 @@ safeInit (x:xs) = Just (x : loop xs)
 -- Exercise 2
 
 splitWith :: (a -> Bool) -> [a] -> [[a]]
+splitWith _ [] = []
 splitWith p xs =
 	let (as, bs) = break (not . p) xs
 	in as : case bs of
