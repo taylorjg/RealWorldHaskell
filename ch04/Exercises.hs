@@ -30,7 +30,7 @@ safeInit (x:xs) = Just (x : loop xs)
 
 splitWith :: (a -> Bool) -> [a] -> [[a]]
 splitWith p xs =
-	let (as, bs) = break (\x -> not (p x)) xs
+	let (as, bs) = break (not . p) xs
 	in as : case bs of
 		[] -> []
 		_ -> splitWith p (tail bs)
