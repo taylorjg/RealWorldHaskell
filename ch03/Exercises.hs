@@ -58,3 +58,15 @@ intersperse _ (x:[]) = x
 intersperse sep (x:xs) = x ++ [sep] ++ (intersperse sep xs)
 
 -- **********************************************************************
+
+-- Exercise 8
+
+data Tree a = Node a (Tree a) (Tree a)
+	| Empty
+	deriving (Show)
+
+treeHeight :: Tree a -> Int
+treeHeight Empty = 0
+treeHeight (Node _ l r) = 1 + max (treeHeight l) (treeHeight r)
+
+-- **********************************************************************
