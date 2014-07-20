@@ -70,3 +70,19 @@ treeHeight Empty = 0
 treeHeight (Node _ l r) = 1 + max (treeHeight l) (treeHeight r)
 
 -- **********************************************************************
+
+-- Exercise 9
+
+data Direction = LeftTurn | RightTurn | StraightOn deriving (Show)
+type Point = (Int, Int)
+
+-- Exercise 10
+
+calculateTurn :: Point -> Point -> Point -> Direction
+calculateTurn (x1,y1) (x2,y2) (x3,y3)
+	| crossProduct > 0 = LeftTurn
+	| crossProduct < 0 = RightTurn
+	| otherwise = StraightOn
+	where crossProduct = ((x2 - x1) * (y3 - y1)) - ((y2 - y1) * (x3 - x1))
+
+-- **********************************************************************
