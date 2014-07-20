@@ -1,3 +1,9 @@
+import Data.List(sortBy)
+
+-- **********************************************************************
+
+-- Pages 69-70
+
 -- **********************************************************************
 
 -- Exercises 1 & 2
@@ -21,15 +27,25 @@ listMean xs = sum xs / fromIntegral (listLength xs)
 -- **********************************************************************
 
 -- Exercise 4
+
 palindrome :: [a] -> [a]
 palindrome xs = xs ++ reverse xs
 
 -- **********************************************************************
 
 -- Exercise 5
+
 isPalindrome :: Eq a => [a] -> Bool
 isPalindrome [] = True
 isPalindrome [x] = True
 isPalindrome (x:xs) = (x == last xs) && isPalindrome (init xs)
+
+-- **********************************************************************
+
+-- Exercise 6
+
+sortListsByLength :: [[a]] -> [[a]]
+sortListsByLength = sortBy compareListLengths
+	where compareListLengths xs ys = length xs `compare` length ys
 
 -- **********************************************************************
