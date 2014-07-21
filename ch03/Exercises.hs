@@ -74,7 +74,7 @@ treeHeight (Node _ l r) = 1 + max (treeHeight l) (treeHeight r)
 -- Exercise 9
 
 data Direction = LeftTurn | RightTurn | StraightOn deriving (Show)
-type Point = (Int, Int)
+type Point = (Double, Double)
 
 -- Exercise 10
 
@@ -90,5 +90,44 @@ calculateTurn (x1,y1) (x2,y2) (x3,y3)
 calculateTurns :: [Point] -> [Direction]
 calculateTurns ps@(a:b:c:_) = calculateTurn a b c : calculateTurns (tail ps)
 calculateTurns _ = []
+
+-- Exercise 12
+
+lineToPolar :: Point -> Point -> (Double, Double)
+lineToPolar (px,py) (ax,ay) =
+	(r, theta) where
+		dx = ax - px
+		dy = ay - py
+		r = sqrt(dx * dx + dy * dy)
+		theta = atan2 dy dx
+
+lowestPoint :: [Point] -> Point
+lowestPoint [] = error "lowestPoint called with an empty list of points"
+lowestPoint (p:ps) =
+	loop p ps
+	where
+		loop :: Point -> [Point] -> Point
+		loop lp [] = lp
+		loop lp@(lpx,lpy) (a@(ax,ay):ps)
+			| ay < lpy = loop a ps
+			| ay == lpy && ax < lpx = loop a ps
+			| otherwise = loop lp ps
+
+sortPoints :: [Point] -> Point -> [Point]
+sortPoints ps p =
+	let ps' = filter (/= p) ps
+	in p : sortBy increasingAngle ps'
+		where increasingAngle a b = r1 `compare` r2
+			where
+				(r1,th1) = lineToPolar p a
+				(r2,th2) = lineToPolar p b
+
+grahamScan :: [Point] -> [Point]
+grahamScan ps =
+	let
+		lp = lowestPoint ps
+		ps' = sortPoints ps lp
+	in
+		ps'
 
 -- **********************************************************************
